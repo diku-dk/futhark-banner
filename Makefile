@@ -1,3 +1,4 @@
+PREFIX ?= /usr/local
 FUTHARK_BACKEND=multicore
 
 all: futhark-banner
@@ -19,3 +20,8 @@ futhark-banner: text.o futhark-banner.o
 
 clean:
 	rm -f futhark-banner *.o text.{c,h,json}
+
+install: all
+	@echo \# Installing executable files to ${PREFIX}/bin
+	@mkdir -p ${PREFIX}/bin/
+	install futhark-banner ${PREFIX}/bin/
