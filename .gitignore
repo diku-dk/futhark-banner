@@ -1,5 +1,6 @@
 lib
 *.o
 text.c
-*.json
+text.h
+text.json
 futhark-banner
