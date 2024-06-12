@@ -1,18 +1,21 @@
 FUTHARK_BACKEND=multicore
 
-all: banner
+all: futhark-banner
 
-text.c: text.fut
+lib: futhark.pkg
+	futhark pkg sync
+
+text.c: text.fut lib
 	futhark $(FUTHARK_BACKEND) --library text.fut
 
 text.o: text.c
 	cc -c text.c -O
 
-banner.o: banner.c text.c
-	cc -c banner.c -O
+futhark-banner.o: futhark-banner.c text.c
+	cc -c futhark-banner.c -O
 
-banner: text.o banner.o
-	cc -o banner text.o banner.o -Wall -Wextra -pedantic -pthread
+futhark-banner: text.o futhark-banner.o
+	cc -o futhark-banner text.o futhark-banner.o -Wall -Wextra -pedantic -pthread
 
 clean:
-	rm -f banner *.o text.{c,h,json}
+	rm -f futhark-banner *.o text.{c,h,json}

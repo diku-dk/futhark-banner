@@ -2,4 +2,4 @@ lib
 *.o
 text.c
 *.json
-banner
+futhark-banner

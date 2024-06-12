@@ -111,8 +111,16 @@ int main(int argc, char** argv) {
   error = futhark_entry_init(ctx, &state, nrows*2, ncols);
   assert(!error);
 
-  add_text(ctx, &state, "Hello", 1, 1, 40);
-  add_text(ctx, &state, "world", 20, 20, 20);
+  for (int i = 1; i < argc-3; i += 4) {
+    int x = atoi(argv[i]);
+    int y = atoi(argv[i+1]);
+    int scale = atoi(argv[i+2]);
+    if (scale < 1) {
+      fprintf(stderr, "Scale must be positive number, not %s\n", argv[i+2]);
+      exit(1);
+    }
+    add_text(ctx, &state, argv[i+3], x, y, scale);
+  }
 
   while (1) {
     struct futhark_u32_2d *arr;
